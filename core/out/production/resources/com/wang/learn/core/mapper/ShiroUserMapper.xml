@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.learn.core.mapper.ShiroUserMapper">
+
+    <select id="selectUserByName" resultType="com.wang.learn.core.dto.ShiroUser">
+        SELECT
+          USER_ID AS userId ,
+          USER_NAME AS userName,
+          PASSWORD AS passWord,
+          EMAIL AS email,
+          PHONE AS phone,
+          SALT AS salt
+        FROM shiro_user
+        WHERE USER_NAME = #{userName}
+        AND LOCKED = 0;
+    </select>
+
+    <select id="selectUserByPhone" resultType="com.wang.learn.core.dto.ShiroUser">
+        SELECT
+          USER_ID AS userId ,
+          USER_NAME AS userName,
+          PASSWORD AS passWord,
+          EMAIL AS email,
+          PHONE AS phone,
+          SALT AS salt
+        FROM shiro_user
+        WHERE PHONE = #{ phone }
+        AND LOCKED = 0;
+    </select>
+
+    <select id="selectUserByEmail" resultType="com.wang.learn.core.dto.ShiroUser">
+        SELECT
+          USER_ID AS userId ,
+          USER_NAME AS userName,
+          PASSWORD AS passWord,
+          EMAIL AS email,
+          PHONE AS phone,
+          SALT AS salt
+        FROM shiro_user
+        WHERE EMAIL = #{ email }
+        AND LOCKED = 0;
+    </select>
+
+    <insert id="insert" parameterType="com.wang.learn.core.dto.ShiroUser">
+        INSERT INTO shiro_user(USER_NAME,PASSWORD,EMAIL,PHONE,LOCKED,SALT)
+        VALUES (
+        #{ userName },
+        #{ passwordWord },
+        #{ email },
+        #{ phone },
+        0,
+        #{ salt }
+        )
+    </insert>
+
+</mapper>

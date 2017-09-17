@@ -1,0 +1,75 @@
+
+# 配置服务上下文和端口
+#server:
+#  port: 7777
+#  context-path: /
+
+#配置https
+server:
+  port: 8442
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    keyAlias: tomcat
+
+#数据源配置
+dataSource:
+  jdbcUrl: jdbc:mysql://localhost:3306/shiro_demo?useUnicode=true&characterEncoding=UTF-8
+  username: root
+  password: 853082
+  readOnly: false
+  connectionTimeout: 30000
+  idleTimeout: 600000
+  maxLifeTime: 1800000
+  maximumPoolSize: 3
+  driverClassName: com.mysql.jdbc.Driver
+
+#mybatis配置扫描路径
+mybatis:
+  mapper-locations: classpath:*.mapper/*.xml
+#mybatis.config：mybatis-config.xml配置文件的路径
+#mybatis.typeHandlersPackage：扫描typeHandlers的包
+#mybatis.checkConfigLocation：检查配置文件是否存在
+#mybatis.executorType：设置执行模式（,SIMPLE REUSE, BATCH），默认为SIMPLE
+#shiro-passwordHelper的配置
+shiro:
+  passwordHelper:
+    algorithName: md5
+    hasIterations: 2
+  hashedCredentialsMatcher:
+    hashAlgorithmName: md5
+    hashIterations: 2
+  ssl:
+    port: 8442
+#配置shiro的session模板
+  session:
+    name: SHIROSESSIONID
+    maxAge: 1800000
+    httpOnly: true
+
+# 配置redis
+spring:
+  redis:
+    hostName: localhost
+    port: 6379
+    timeout: 3000
+    database: 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

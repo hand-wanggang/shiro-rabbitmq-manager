@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wang.learn.core.mapper.ShiroPermissionMapper">
+
+    <select id="selectPermissionById" resultType="com.wang.learn.core.dto.ShiroPermission">
+        SELECT
+          PERMISSION_ID AS permissionId,
+          PERMISSION_NAME AS permissionName,
+          PERMISSION_DESC AS permissionDesc
+        FROM shiro_permission
+        WHERE PERMISSION_ID = #{ permissionId }
+        AND LOCKED = 0;
+    </select>
+
+    <select id="selectUserPermissionById" resultType="com.wang.learn.core.dto.ShiroPermission">
+        SELECT
+          sp.PERMISSION_ID AS permissionId,
+          sp.PERMISSION_NAME AS permissionName,
+          sp.PERMISSION_DESC AS permissionDesc
+        FROM shiro_permission AS sp
+        JOIN role_rel_permission AS rrp ON rrp.PERMISSION_ID = sp.PERMISSION_ID AND rrp.LOCKED = 0
+        JOIN user_rel_role AS urr ON urr.ROLE_ID =rrp.ROLE_ID AND urr.LOCKED = 0
+        WHERE urr.USER_ID = #{ userId } AND sp.LOCKED = 0
+    </select>
+
+    <insert id="insert" parameterType="com.wang.learn.core.dto.ShiroPermission">
+        INSERT INTO shiro_permission(PERMISSION_NAME,PERMISSION_DESC,LOCKED)
+        VALUES (
+        #{ permissionName },
+        #{ permissionDesc },
+        0
+        )
+    </insert>
+</mapper>
